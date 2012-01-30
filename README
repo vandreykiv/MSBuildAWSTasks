@@ -1,0 +1,4 @@
+FORK http://snowcode.googlecode.com/svn/trunk/2010-04-TramDepot/Snowcode.S3BuildPublisher/
+
+Added tasks for clean S3 bucket. (See S3Examples.proj for examples)
+Added task to retrieve EC2 public IP and public DNS by instance name. (See EC2Examples.proj for examples)
