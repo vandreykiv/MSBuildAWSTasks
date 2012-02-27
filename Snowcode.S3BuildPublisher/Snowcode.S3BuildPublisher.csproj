@@ -77,6 +77,7 @@
     <Compile Include="S3\CleanS3BucketTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="S3\DownloadS3FileTask.cs" />
     <Compile Include="S3\CreateS3BucketTask.cs" />
     <Compile Include="S3\DeleteS3ObjectTask.cs" />
     <Compile Include="S3\PutS3FileObjectTask.cs" />

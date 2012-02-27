@@ -165,6 +165,47 @@ namespace Snowcode.S3BuildPublisher.S3
         }
 
         /// <summary>
+        /// Download object from a S3 bucket.
+        /// </summary>
+        /// <param name="BucketName"></param>
+        /// <param name="FileName"></param>
+        public void DownloadFile(string BucketName, string[] FilesName, string SavePath, string Version)
+        {
+            ListObjectsRequest request = new ListObjectsRequest();
+            request.BucketName = BucketName;
+            request.MaxKeys = 1000000;
+
+
+            foreach (string FileName in FilesName)
+            {
+                string dest = Path.Combine(SavePath, FileName);
+                using (ListObjectsResponse response = Client.ListObjects(request))
+                {
+                    GetObjectRequest getObjectRequest = new GetObjectRequest().WithBucketName(BucketName).WithKey(Version + "/" + FileName);
+                    using (S3Response getObjectResponse = Client.GetObject(getObjectRequest))
+                    {
+                        using (Stream s = getObjectResponse.ResponseStream)
+                            {
+                                using (FileStream fs = new FileStream(dest, FileMode.Create, FileAccess.Write))
+                                {
+                                    byte[] data = new byte[32768];
+                                    int bytesRead = 0;
+                                    do
+                                    {
+                                        bytesRead = s.Read(data, 0, data.Length);
+                                        fs.Write(data, 0, bytesRead);
+                                    }
+                                    while (bytesRead > 0);
+                                    fs.Flush();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+       
+
+        /// <summary>
         /// Sets the ACL
         /// </summary>
         /// <param name="bucketName"></param>
