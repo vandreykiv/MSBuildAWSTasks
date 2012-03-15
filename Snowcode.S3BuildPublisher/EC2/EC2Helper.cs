@@ -31,6 +31,13 @@ namespace Snowcode.S3BuildPublisher.EC2
             Client = AWSClientFactory.CreateAmazonEC2Client(clientDetails.AwsAccessKeyId, clientDetails.AwsSecretAccessKey);
         }
 
+        public EC2Helper(AwsClientDetails clientDetails, String regionURL)
+        {
+            AmazonEC2Config region = new AmazonEC2Config();
+            region.ServiceURL = regionURL;
+            Client = AWSClientFactory.CreateAmazonEC2Client(clientDetails.AwsAccessKeyId, clientDetails.AwsSecretAccessKey, region);
+        }
+
         public EC2Helper(AmazonEC2 amazonEC2Client)
         {
             Client = amazonEC2Client;

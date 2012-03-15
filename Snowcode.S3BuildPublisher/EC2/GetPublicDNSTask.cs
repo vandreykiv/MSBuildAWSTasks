@@ -19,6 +19,9 @@ namespace Snowcode.S3BuildPublisher.EC2
         [Required]
         public string InstanceName { get; set; }
 
+        
+        public string Region { get; set; }
+
         [Output]
         public string PublicDNS { get; set; }
         [Output]
@@ -33,8 +36,8 @@ namespace Snowcode.S3BuildPublisher.EC2
             try
             {
                 AwsClientDetails clientDetails = GetClientDetails();
-
                 GetPublicDNS(clientDetails);
+
                 Log.LogMessage("PublicDNS for instance {0} is {1}", InstanceName, PublicDNS);
                 Log.LogMessage("PublicIP for instance {0} is {1}", InstanceName, PublicIP);
                 return true;
@@ -48,14 +51,26 @@ namespace Snowcode.S3BuildPublisher.EC2
 
         private void GetPublicDNS(AwsClientDetails clientDetails)
         {
-            using (var helper = new EC2Helper(clientDetails))
+            if (Region != null)
             {
-                helper.GetPublicDNS(InstanceName);
-                Log.LogMessage(MessageImportance.Normal, "Public DNS and IP address for instance {0} retrived ", InstanceName);
-                PublicDNS = helper.publicDNS;
-                PublicIP = helper.publicIP;
+                using (var helper = new EC2Helper(clientDetails, Region))
+                {
+                    helper.GetPublicDNS(InstanceName);
+                    Log.LogMessage(MessageImportance.Normal, "Public DNS and IP address for instance {0} retrived ", InstanceName);
+                    PublicDNS = helper.publicDNS;
+                    PublicIP = helper.publicIP;
+                }
             }
-            
+            else
+            {
+                using (var helper = new EC2Helper(clientDetails))
+                {
+                    helper.GetPublicDNS(InstanceName);
+                    Log.LogMessage(MessageImportance.Normal, "Public DNS and IP address for instance {0} retrived ", InstanceName);
+                    PublicDNS = helper.publicDNS;
+                    PublicIP = helper.publicIP;
+                }
+            }
         }
 }
     }
