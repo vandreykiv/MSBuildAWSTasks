@@ -178,10 +178,19 @@ namespace Snowcode.S3BuildPublisher.S3
 
             foreach (string FileName in FilesName)
             {
-                string dest = Path.Combine(SavePath, FileName);
+                string FullFileName = Path.GetFileName(FileName);
+                string dest = Path.Combine(SavePath, FullFileName);
                 using (ListObjectsResponse response = Client.ListObjects(request))
                 {
-                    GetObjectRequest getObjectRequest = new GetObjectRequest().WithBucketName(BucketName).WithKey(Version + "/" + FileName);
+                    GetObjectRequest getObjectRequest = new GetObjectRequest();
+                  if (Version == null)
+                  {
+                        getObjectRequest = new GetObjectRequest().WithBucketName(BucketName).WithKey(FileName);
+                    }
+                    else
+                    {
+                        getObjectRequest = new GetObjectRequest().WithBucketName(BucketName).WithKey(Version + "/" + FileName);
+                    }
                     using (S3Response getObjectResponse = Client.GetObject(getObjectRequest))
                     {
                         using (Stream s = getObjectResponse.ResponseStream)
