@@ -43,3 +43,7 @@ Implement CloudFront tasks to allow publish/update of CloudFront files as part o
 Notes:
 -----
 If you stored your keys with a version before 1.0.0.10 they will need to be updated as salting has been added to the container.
+
+Changes:
+-----
+2012-07-24 - Added support to get the queue url instead of having to try to create a queue. (previous approach only worked if the queue had default settings) - JohnMorales
