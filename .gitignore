@@ -1,0 +1,5 @@
+
+/_ReSharper.Snowcode.S3BuildPublisher
+*.suo
+*/obj/
+*/bin/

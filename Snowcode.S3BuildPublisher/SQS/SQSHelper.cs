@@ -105,6 +105,21 @@ namespace Snowcode.S3BuildPublisher.SQS
             ListQueuesResponse response = Client.ListQueues(request);
 
             return response.ListQueuesResult.QueueUrl.ToArray();
+        }    
+		
+		/// <summary>
+        /// Get a queue by name.
+        /// </summary>
+        /// <returns></returns>
+        public string GetQueue(string queueName)
+        {
+			var request = new ListQueuesRequest {QueueNamePrefix = queueName};
+
+			ListQueuesResponse response = Client.ListQueues(request);
+
+			var urls = response.ListQueuesResult.QueueUrl;
+
+			return urls.Count > 0 ? urls[0] : null;
         }
 
         /// <summary>
