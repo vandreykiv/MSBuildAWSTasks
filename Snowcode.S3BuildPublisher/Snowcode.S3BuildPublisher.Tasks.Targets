@@ -53,6 +53,7 @@
   
   <!-- SQS -->
   <UsingTask AssemblyFile="$(S3BuildPublisherLibrary)" TaskName="CreateSQSQueueTask" />
+  <UsingTask AssemblyFile="$(S3BuildPublisherLibrary)" TaskName="GetSQSQueueURLTask" />
   <UsingTask AssemblyFile="$(S3BuildPublisherLibrary)" TaskName="DeleteSQSQueueTask" />
   <UsingTask AssemblyFile="$(S3BuildPublisherLibrary)" TaskName="SendSQSMessageTask" />
   <UsingTask AssemblyFile="$(S3BuildPublisherLibrary)" TaskName="ReceiveSQSMessageTask" />

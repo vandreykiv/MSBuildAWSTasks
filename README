@@ -2,3 +2,4 @@ FORK http://snowcode.googlecode.com/svn/trunk/2010-04-TramDepot/Snowcode.S3Build
 
 Added tasks for clean S3 bucket. (See S3Examples.proj for examples)
 Added task to retrieve EC2 public IP and public DNS by instance name. (See EC2Examples.proj for examples)
+2012-07-24 - Added support to get the queue url instead of having to try to create a queue. (previous approach only worked if the queue had default settings) - JohnMorales
